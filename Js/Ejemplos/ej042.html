@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            .save {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+                gap: 10px;
+                font-family: Arial, sans-serif;
+                font-size: 18px;
+                color: #333;
+                
+            }
+            .save button {
+                margin-top: 10px;
+                width: 200px;
+                height: 30px;
+                font-size: 14px;
+                cursor: pointer;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                background-color: #e9e5e5;
+                transition: background-color 0.5s;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div class="save">
+            <input id="texto" type="text" placeholder="Escribe algo...">
+            <button id="btn1">Guardar en local storage</button>
+            <button id="btn2">Guardar en session storage</button>
+            <button id="btn3">Guardar en cookies</button>
+        </div>
+        <div>
+            <div>Informacion guardada en :</div>
+            <div>
+                Local storage: <div id="out1"></div>
+            </div>
+            <div>
+                Session storage: <div id="out2"></div>
+            </div>
+            <div>
+                Cookies: <div id="out3"></div>
+            </div>
+        </div>
+        <script>
+            function getCookie(name) {
+                const cookies = document.cookie.split('; ');
+
+                for (const cookie of cookie) {
+                    const [key, value] = cookie.split('=');
+                    if (key === name) {
+                        return decodeURIComponent(value);
+                    }
+                }
+                return null;
+            }
+
+
+            const input = document.getElementById('texto')
+            const out1 = document.getElementById('out1')
+            const out2 = document.getElementById('out2')
+            const out3 = document.getElementById('out3')
+
+            out1.textContent = localStorage.getItem('demoText') ?? 'vacio'
+            out2.textContent = sessionStorage.getItem('demoText') ?? 'vacio'
+            out3.textContent = getCookie('demoText') ?? vacio
+
+            document.getElementById('btn1').addEventListener('click', ()=>{
+                const value = input.value
+                localStorage.setItem('demoText', value)
+                out1.textContent = value
+            })
+            document.getElementById('btn2').addEventListener('click', ()=>{
+                const value = input.value
+                sessionStorage.setItem('demoText', value)
+                out2.textContent = value
+            })
+            document.getElementById('btn3').addEventListener('click', ()=>{
+                const value = input.value
+                const expires = new Date
+                document.cookie = `demoText=${encodeURIComponent(value)}; path/; expires=01 Oct 2025 01:00:00 GMT`
+                out3.textContent = value
+            })
+        </script>
+    </body>
+</html>

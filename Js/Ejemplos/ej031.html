@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">Obtener RickAndMorty con Promesas(then)</button>
+    <div id="output"></div>
+    <script>
+        const TOTAL_CHARACTERS = 826
+        const getRandomNum = () => Math.floor(Math.random() * TOTAL_CHARACTERS) + 1
+
+        document.getElementById('btn').addEventListener('click', () => {
+            // Obtener un numero aleatorio 0 a X
+        const randomNum = getRandomNum()
+        // Conectarme con el api de rickandmorty para obtener
+        fetch('https://rickandmortyapi.com/api/character' + randomNum)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('output').innerHTML = `
+                <h2>${data.name}</h2>
+                <img src="${data.image}"/>
+                `
+            })
+        })
+        
+    </script>
+</body>
+</html>
